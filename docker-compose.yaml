@@ -8,13 +8,13 @@ services:
       - ./data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: training
+      MYSQL_DATABASE: task
     networks:
-      - go-academy
+      - go-todo-sam-app
 
     ports:
       - 3306:3306
 
 networks:
-  go-academy:
+  go-todo-sam-app:
     external: true

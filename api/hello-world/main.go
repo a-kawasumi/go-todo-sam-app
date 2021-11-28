@@ -1,8 +1,10 @@
 package main
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
+	"hello-world/api/models"
 	"io/ioutil"
 	"net/http"
 
@@ -40,8 +42,18 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		return events.APIGatewayProxyResponse{}, ErrNoIP
 	}
 
+	responseJson := models.ResponseJSON{
+		OK:      true,
+		Message: "hello world",
+	}
+	response, err := json.Marshal(responseJson)
+	if err != nil {
+		fmt.Println(err)
+		return events.APIGatewayProxyResponse{}, err
+	}
+
 	return events.APIGatewayProxyResponse{
-		Body:       fmt.Sprintf("Hello, %v", string(ip)),
+		Body:       string(response),
 		StatusCode: 200,
 	}, nil
 }
